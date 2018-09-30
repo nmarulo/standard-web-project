@@ -6,11 +6,19 @@
 
     <groupId>red.softn.standard.web.project</groupId>
     <artifactId>standard-web-project</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.0-ALPHA</version>
     <packaging>pom</packaging>
 
     <properties>
-        <APP_VERSION>0.1.0-ALPHA</APP_VERSION>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+
+    <modules>
+        <module>module-objects-api</module>
+        <module>module-rest-api</module>
+    </modules>
 
 </project>
