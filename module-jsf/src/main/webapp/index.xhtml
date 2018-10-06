@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+>
+<body>
+<ui:composition template="/WEB-INF/template/login.xhtml">
+    <ui:define name="content">
+        <div id="login" class="page-container center-block">
+            <div class="panel panel-default clearfix">
+                <div class="panel-body">
+                    <div id="logo">
+                        <h:graphicImage value="resources/images/softn.png" styleClass="center-block"
+                                        alt="SoftN"/>
+                        <h1 class="text-center">Standard Web Project
+                            <small>SoftN</small>
+                        </h1>
+                    </div>
+                    <hr/>
+                    <h:form id="form" styleClass="form-table">
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-user"/> Usuario
+                            </span>
+                            <p:inputText styleClass="form-control" value="#{loginBean.userResponse.userLogin}"/>
+                        </div>
+                        <span class="form-table-cell-hidden"/>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-lock"/> Contraseña
+                            </span>
+                            <p:password styleClass="form-control" value="#{loginBean.userResponse.userPassword}"/>
+                        </div>
+                        <span class="form-table-cell-hidden"/>
+                        <div class="form-group input-group">
+                            <p:commandLink update="messages" styleClass="btn btn-primary btn-block"
+                                           actionListener="#{loginBean.login()}">
+                                Iniciar sesión <span class="glyphicon glyphicon-chevron-right"/>
+                            </p:commandLink>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+</body>
+</html>

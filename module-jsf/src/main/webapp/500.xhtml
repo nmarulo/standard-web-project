@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xml:lang="es" lang="es">
+<h:head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Standard Web Project | ERROR 500</title>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</h:head>
+<h:body>
+    <h:outputStylesheet library="css" name="normalize.css"/>
+    <h:outputStylesheet library="css" name="bootstrap.css"/>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <div class="container-fluid">
+        <div id="login" class="page-container center-block">
+            <div class="panel panel-default clearfix">
+                <div class="panel-body">
+                    <div id="logo" class="text-center">
+                        <h:graphicImage value="resources/images/softn.png" styleClass="center-block"
+                                        alt="SoftNs"/>
+                        <h1 class="text-danger">ERROR 500</h1>
+                        <p>No se logro enviar la petición, por favor, intentelo nuevamente.</p>
+                    </div>
+                    <hr/>
+                    <p:link outcome="/index" styleClass="btn btn-primary btn-block">Inicio</p:link>
+                </div>
+            </div>
+        </div>
+    </div>
+</h:body>
+</html>

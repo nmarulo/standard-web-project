@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+>
+<body>
+<ui:composition>
+    <div id="session-timeout-screen" class="full-screen">
+        <div class="full-screen-container">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>La sesión finalizará en:</p>
+                    <h2 class="text-center"><span id="session-timeout-count">0</span></h2>
+                    <hr/>
+                    <h:form>
+                        <p:commandButton styleClass="btn btn-primary btn-block" value="Cancelar"/>
+                        <p:remoteCommand name="remoteCommandLogout" actionListener="#{loginBean.logout()}"
+                                         onstart="screenLoading(true)"
+                                         oncomplete="locationReplace('#{request.contextPath}')"/>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <div class="full-screen-background"/>
+    </div>
+</ui:composition>
+</body>
+</html>

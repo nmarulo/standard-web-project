@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<body>
+<ui:composition>
+    <div class="modal fade #{modalClass}" tabindex="-1" role="dialog">
+        <div class="modal-dialog #{modalSize}" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">
+                        <ui:insert name="title">
+                            Title
+                        </ui:insert>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <ui:insert name="body">
+                        Body
+                    </ui:insert>
+                </div>
+                <c:if test="#{hideFooter == null}">
+                    <div class="modal-footer">
+                        <ui:insert name="footer">
+                            Footer
+                        </ui:insert>
+                    </div>
+                </c:if>
+            </div>
+        </div>
+    </div>
+</ui:composition>
+</body>
+</html>

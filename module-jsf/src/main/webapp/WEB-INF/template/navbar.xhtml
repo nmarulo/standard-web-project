@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<body>
+<ui:composition>
+    <nav class="navbar navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbar-main">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"/>
+                    <span class="icon-bar"/>
+                    <span class="icon-bar"/>
+                </button>
+                <button id="btn-toggle-side-nav" class="navbar-brand btn hidden-xs" type="button">
+                    <span class="glyphicon glyphicon-menu-hamburger"/>
+                </button>
+                <p:link outcome="/index" styleClass="navbar-brand">Standard Web Project</p:link>
+            </div>
+            <h:form>
+                <div class="collapse navbar-collapse" id="navbar-main">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
+                                <span class="glyphicon glyphicon-user"/>
+                                Hola #{sessionBean.userResponse.userName}
+                                <span class="caret"/>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <h:commandLink styleClass="btn btn-navbar"
+                                                   actionListener="#{loginBean.logout()}">
+                                        <span>Cerrar sesión</span>
+                                    </h:commandLink>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="menu-content nav navbar-nav side-nav">
+                        <li>
+                            <p:link outcome="/dashboard/index">
+                                <span class="glyphicon glyphicon-globe"/> Información
+                            </p:link>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">
+                                <span class="glyphicon glyphicon-user"/>
+                                Usuarios <span class="caret"/>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <p:link outcome="/dashboard/user/index" value="Usuarios"/>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p:link outcome="/dashboard/configuration/index">
+                                <span class="glyphicon glyphicon-cog"/> Configuración
+                            </p:link>
+                        </li>
+                    </ul>
+                </div>
+            </h:form>
+        </div>
+    </nav>
+</ui:composition>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui"
+>
+<body>
+<ui:composition template="/WEB-INF/template/index.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <h1>Usuarios
+                <p:link outcome="/dashboard/users/form" class="btn btn-success">
+                    <span class="glyphicon glyphicon-plus"/>
+                </p:link>
+            </h1>
+        </h:form>
+        <div id="data-container">
+            <ui:include src="datatable.xhtml"/>
+        </div>
+        <ui:include src="modaldelete.xhtml"/>
+    </ui:define>
+</ui:composition>
+</body>
+</html>

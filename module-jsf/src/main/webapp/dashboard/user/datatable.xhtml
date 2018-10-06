@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+<body>
+<ui:composition>
+    <p:dataTable var="user" value="#{userBean.userResponseList}">
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Id"/>
+            </f:facet>
+            <h:outputText value="#{user.id}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Nombre"/>
+            </f:facet>
+            <h:outputText value="#{user.userName}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Login"/>
+            </f:facet>
+            <h:outputText value="#{user.userLogin}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Email"/>
+            </f:facet>
+            <h:outputText value="#{user.userEmail}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Registro"/>
+            </f:facet>
+            <h:outputText value="#{user.userRegistered}"/>
+        </p:column>
+    </p:dataTable>
+</ui:composition>
+</body>
+</html>
