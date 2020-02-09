@@ -16,12 +16,10 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>module-objects-api</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>module-common</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
