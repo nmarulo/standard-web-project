@@ -48,8 +48,12 @@ public abstract class AHttpClient {
         return get(null, rClass, uri);
     }
     
-    public <R, O> R get(O objectRequest, Class<R> rClass, String... uri) throws Exception {
-        return call(Request::Get, null, rClass, GsonUtil.convertObjectToMap(objectRequest), uri);
+    public <R, P> R get(P objectParam, Class<R> rClass, String... uri) throws Exception {
+        return get(null, objectParam, rClass, uri);
+    }
+    
+    public <R, O, P> R get(O objectRequest, P objectParam, Class<R> rClass, String... uri) throws Exception {
+        return call(Request::Get, objectRequest, rClass, GsonUtil.convertObjectToMap(objectParam), uri);
     }
     
     public <R, O> R post(O objectRequest, Class<R> rClass, String... uri) throws Exception {
@@ -137,7 +141,6 @@ public abstract class AHttpClient {
         
         if (!DefaultUtils.isEmpty(parameters)) {
             parameters.forEach((key, value) -> uriBuilder.setParameter(key, String.valueOf(value)));
-            
         }
         
         return uriBuilder.build();
