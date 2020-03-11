@@ -11,5 +11,12 @@
 
     <artifactId>module-db</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>module-common</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>
