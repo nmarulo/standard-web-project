@@ -9,7 +9,9 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.io.File;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.net.InetAddress;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -340,5 +342,30 @@ public class DefaultUtils {
     
     public static int doubleToInt(Double num) {
         return doubleToInt(num, false);
+    }
+    
+    public static boolean isPrimitive(Type type) {
+        return type instanceof Class<?> && ((Class<?>) type).isPrimitive();
+    }
+    
+    public static boolean isWrapperType(Type type) {
+        return type == Integer.class
+            || type == Float.class
+            || type == Byte.class
+            || type == Double.class
+            || type == Long.class
+            || type == Character.class
+            || type == Boolean.class
+            || type == Short.class
+            || type == String.class
+            || type == Date.class
+            || type == Timestamp.class
+            || type == Time.class
+            || type == java.sql.Date.class
+            || type == Void.class;
+    }
+    
+    public static boolean isPrimitiveOrWrapper(Type type) {
+        return isPrimitive(type) || isWrapperType(type);
     }
 }
