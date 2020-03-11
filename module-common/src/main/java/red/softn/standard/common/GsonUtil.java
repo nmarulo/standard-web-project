@@ -3,6 +3,7 @@ package red.softn.standard.common;
 import com.google.gson.*;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import red.softn.standard.common.gson.GsonExclusionStrategy;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -65,7 +66,8 @@ public class GsonUtil {
     public static Gson gsonBuilder() {
         GsonBuilder builder = new GsonBuilder();
         registerAdapterDateTime(builder);
-    
+        builder.setExclusionStrategies(GsonExclusionStrategy.getInstance());
+        
         return builder.create();
     }
     
