@@ -17,8 +17,7 @@ public class CrudDAO<T, ID> {
     
     public List<T> find(EntityManager entityManager, T entity) throws Exception {
         return QueryEntityBuilder.create(entityManager, getEntityClass(), entity)
-                                 .build()
-                                 .getResultList();
+                                 .getList();
     }
     
     public T findById(EntityManager entityManager, ID id) throws Exception {
@@ -35,6 +34,11 @@ public class CrudDAO<T, ID> {
     
     public void deleteById(EntityManager entityManager, ID id) throws Exception {
         entityManager.remove(findById(entityManager, id));
+    }
+    
+    public long count(EntityManager entityManager, T entity) throws Exception {
+        return QueryEntityBuilder.create(entityManager, getEntityClass(), entity)
+                                 .getCount();
     }
     
     private Class<T> getEntityClass() throws Exception {
