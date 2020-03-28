@@ -1,16 +1,12 @@
 package red.softn.standard.db.common;
 
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.Setter;
 import red.softn.standard.common.ReflectionUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -23,13 +19,18 @@ public class QueryEntityBuilder<E> {
     private QueryEntityBuilder() {
     }
     
-    public static <E> Builder<E> create(EntityManager entityManager, Class<E> entityClass, E entity) {
-        return new Builder<>(new QueryEntityBuilder<>(), entityManager, entityClass, entity);
+    public static <E> QueryEntityBuilder<E> create(EntityManager entityManager, Class<E> entityClass, E entity) {
+        return new Builder<>(new QueryEntityBuilder<>(), entityManager, entityClass, entity).build();
     }
     
-    public List<E> getResultList() {
-        return this.builder.createQuery()
+    public List<E> getList() {
+        return this.builder.list()
                            .getResultList();
+    }
+    
+    public Long getCount() {
+        return this.builder.count()
+                           .getSingleResult();
     }
     
     public static class Builder<E> {
@@ -42,7 +43,6 @@ public class QueryEntityBuilder<E> {
         
         private CriteriaBuilder criteriaBuilder;
         
-        @Getter(value = AccessLevel.PRIVATE)
         private CriteriaQuery<E> criteriaQuery;
         
         private Root<E> root;
@@ -55,15 +55,27 @@ public class QueryEntityBuilder<E> {
             this.entityClass = entityClass;
             this.entityManager = entityManager;
             this.criteriaBuilder = entityManager.getCriteriaBuilder();
-            this.criteriaQuery = this.criteriaBuilder.createQuery(entityClass);
-            this.root = this.criteriaQuery.from(this.criteriaQuery.getResultType());
         }
         
-        protected TypedQuery<E> createQuery() {
-            this.criteriaQuery.select(this.root);
-            this.criteriaQuery.where(getPredicates());
+        protected TypedQuery<E> list() {
+            this.criteriaQuery = this.criteriaBuilder.createQuery(entityClass);
+            this.root = this.criteriaQuery.from(this.criteriaQuery.getResultType());
             
-            return this.entityManager.createQuery(this.criteriaQuery);
+            return createQuery(this.criteriaQuery, this.root);
+        }
+        
+        protected TypedQuery<Long> count() {
+            CriteriaQuery<Long> criteriaQuery = this.criteriaBuilder.createQuery(Long.class);
+            this.root = criteriaQuery.from(this.entityClass);
+            
+            return createQuery(criteriaQuery, this.criteriaBuilder.count(this.root));
+        }
+        
+        protected <R> TypedQuery<R> createQuery(CriteriaQuery<R> criteriaQuery, Selection<R> selection) {
+            criteriaQuery.select(selection);
+            criteriaQuery.where(getPredicates());
+            
+            return this.entityManager.createQuery(criteriaQuery);
         }
         
         public QueryEntityBuilder<E> build() {
