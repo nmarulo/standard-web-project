@@ -1,29 +1,51 @@
 package red.softn.standard.rest.services;
 
-import red.softn.standard.objects.response.UserResponse;
+import red.softn.standard.middleware.api.UsersMI;
+import red.softn.standard.objects.request.UserRequest;
+import red.softn.standard.rest.ARestService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.inject.Inject;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Date;
 
 @Path("users")
 @Produces(MediaType.APPLICATION_JSON)
-public class UsersService {
+@Consumes(MediaType.APPLICATION_JSON)
+public class UsersService extends ARestService {
+    
+    @Inject
+    private UsersMI usersMI;
     
     @GET
-    public Response getUsers() {
-        return Response.ok()
-                       .entity(new UserResponse() {{
-                           setId(1);
-                           setUserEmail("test@softn.red");
-                           setUserLogin("test");
-                           setUserName("test");
-                           setUserRegistered(new Date());
-                           setUserPassword("123");
-                       }})
-                       .build();
+    public Response get(UserRequest request) {
+        return getResponse(request, this.usersMI::get, true);
+    }
+    
+    @GET
+    @Path("{id}")
+    public Response getById(@PathParam("id") Integer id) {
+        return getResponse(id, this.usersMI::getById);
+    }
+    
+    @POST
+    public Response post(UserRequest request) {
+        return getResponse(request, this.usersMI::post);
+    }
+    
+    @PUT
+    public Response put(UserRequest request) {
+        return getResponse(request, this.usersMI::put);
+    }
+    
+    @DELETE
+    public Response delete(UserRequest request) {
+        return getResponse(request, this.usersMI::delete);
+    }
+    
+    @DELETE
+    @Path("{id}")
+    public Response deleteById(@PathParam("id") Integer id) {
+        return getResponse(id, this.usersMI::deleteById);
     }
 }

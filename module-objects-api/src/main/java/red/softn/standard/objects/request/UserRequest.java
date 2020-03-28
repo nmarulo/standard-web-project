@@ -1,23 +1,7 @@
 package red.softn.standard.objects.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import red.softn.standard.objects.pojo.Users;
 
-import java.util.Date;
-
-@Setter
-@Getter
-public class UserRequest {
+public class UserRequest extends Users {
     
-    private long id;
-    
-    private String userLogin;
-    
-    private String userName;
-    
-    private String userEmail;
-    
-    private String userPassword;
-    
-    private Date userRegistered;
 }

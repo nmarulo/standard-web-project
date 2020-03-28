@@ -1,23 +1,7 @@
 package red.softn.standard.objects.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import red.softn.standard.objects.pojo.Users;
 
-import java.util.Date;
-
-@Getter
-@Setter
-public class UserResponse {
+public class UserResponse extends Users {
     
-    private long id;
-    
-    private String userLogin;
-    
-    private String userName;
-    
-    private String userEmail;
-    
-    private String userPassword;
-    
-    private Date userRegistered;
 }
