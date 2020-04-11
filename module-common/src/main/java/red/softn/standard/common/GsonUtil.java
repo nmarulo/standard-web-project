@@ -1,18 +1,25 @@
 package red.softn.standard.common;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import red.softn.standard.common.gson.GsonExclusionStrategy;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class GsonUtil {
+    
+    private static final String[] DATE_FORMATS = new String[] {
+        "yyyy-MM-dd HH:mm:ss",
+        "yyyy-MM-dd'T'HH:mm:ssXXX",
+        "yyyy-MM-dd"
+    };
     
     /**
      * Convertir un objeto a otro (deben tener atributos con nombres iguales)
@@ -53,14 +60,15 @@ public class GsonUtil {
         return Arrays.asList(gson.fromJson(gson.toJson(list), classOfT));
     }
     
-    public static Map<String, Object> convertObjectToMap(Object object) {
+    public static Map<String, Object> convertObjectToMap(Object object) throws IOException {
         if (object == null) {
             return null;
         }
         
-        Gson gson = gsonBuilder();
+        Gson         gson         = gsonBuilder();
+        ObjectMapper objectMapper = new ObjectMapper();
         
-        return gson.fromJson(gson.toJson(object), Map.class);
+        return objectMapper.readValue(gson.toJson(object), Map.class);
     }
     
     public static Gson gsonBuilder() {
@@ -80,16 +88,24 @@ public class GsonUtil {
         });
         
         builder.registerTypeAdapter(Date.class, (JsonDeserializer<Date>) (json, typeOfT, context) -> {
-            try {
-                String primitiveJson = json.getAsJsonPrimitive()
-                                           .getAsString();
-                
-                return DateUtils.parseDate(primitiveJson, "yyyy-MM-dd HH:mm:ss");
-            } catch (ParseException ex) {
-                return null;
+            JsonPrimitive asJsonPrimitive = json.getAsJsonPrimitive();
+            
+            if (asJsonPrimitive.isNumber()) {
+                return new Date(asJsonPrimitive.getAsLong());
             }
+            
+            String asString = asJsonPrimitive.getAsString();
+            
+            for (String pattern : DATE_FORMATS) {
+                try {
+                    return new SimpleDateFormat(pattern).parse(asString);
+                } catch (ParseException ignored) {
+                }
+            }
+            
+            return null;
         });
         
-        builder.registerTypeAdapter(Date.class, (JsonSerializer<Date>) (src, typeOfSrc, context) -> new JsonPrimitive(DateFormatUtils.format(src, "yyyy-MM-dd HH:mm:ss")));
+        builder.registerTypeAdapter(Date.class, (JsonSerializer<Date>) (src, typeOfSrc, context) -> new JsonPrimitive(src.getTime()));
     }
 }
