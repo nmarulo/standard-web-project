@@ -6,8 +6,7 @@ import red.softn.standard.rest.ARestService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 
 @Path("users")
 @Produces(MediaType.APPLICATION_JSON)
@@ -18,7 +17,7 @@ public class UsersService extends ARestService {
     private UsersMI usersMI;
     
     @GET
-    public Response get(UserRequest request) {
+    public Response get(@BeanParam UserRequest request) {
         return getResponse(request, this.usersMI::get, true);
     }
     
