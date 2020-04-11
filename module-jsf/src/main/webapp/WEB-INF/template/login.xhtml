@@ -18,9 +18,11 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </h:head>
-<h:body>
+<h:body styleClass="hold-transition login-page">
     <h:outputStylesheet library="css" name="normalize.css"/>
     <h:outputStylesheet library="css" name="bootstrap.css"/>
+    <h:outputStylesheet library="css" name="all.min.css"/>
+    <h:outputStylesheet library="css" name="adminlte/AdminLTE.min.css"/>
     <h:outputStylesheet library="css" name="style.css"/>
     <div class="container-fluid">
         <ui:insert name="content">
@@ -32,9 +34,7 @@
     <ui:include src="loading.xhtml"/>
     <ui:include src="viewexpired.xhtml"/>
     <h:outputScript library="js" name="bootstrap.min.js"/>
+    <h:outputScript library="js" name="adminlte.min.js"/>
     <h:outputScript library="js" name="common.js"/>
-    <h:outputScript>
-        viewExpiredScreen(<h:outputText value="#{applicationBean.getSessionTimeoutValue()}"/>);
-    </h:outputScript>
 </h:body>
 </html>

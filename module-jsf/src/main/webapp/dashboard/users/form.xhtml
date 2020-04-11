@@ -8,34 +8,34 @@
 >
 <body>
 <ui:composition template="/WEB-INF/template/index.xhtml">
-    <ui:param name="breadcrumbUrl" value="/dashboard/user/index"/>
+    <ui:param name="breadcrumbUrl" value="/dashboard/users/index"/>
     <ui:param name="breadcrumbName" value="Usuarios"/>
     <ui:define name="content">
         <div class="page-container">
             <div>
-                <h1>#{userBean.userResponse.id == null ? 'Crear' : 'Editar'} usuario</h1>
+                <h1>#{userBean.request.id == null ? 'Crear' : 'Editar'} usuario</h1>
             </div>
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h:form>
                         <div class="form-group">
                             <p:outputLabel styleClass="control-label" value="Nombre"/>
-                            <p:inputText styleClass="form-control" value="#{userBean.userResponse.userLogin}"/>
+                            <p:inputText styleClass="form-control" value="#{userBean.request.userLogin}"/>
                         </div>
                         <div class="form-group">
                             <p:outputLabel styleClass="control-label" value="Nombre"/>
-                            <p:inputText styleClass="form-control" value="#{userBean.userResponse.userName}"/>
+                            <p:inputText styleClass="form-control" value="#{userBean.request.userName}"/>
                         </div>
                         <div class="form-group">
                             <p:outputLabel styleClass="control-label" value="Nombre"/>
-                            <p:inputText styleClass="form-control" value="#{userBean.userResponse.userEmail}"/>
+                            <p:inputText styleClass="form-control" value="#{userBean.request.userEmail}"/>
                         </div>
                         <div class="form-group">
                             <p:outputLabel styleClass="control-label" value="Nombre"/>
-                            <p:inputText styleClass="form-control" value="#{userBean.userResponse.userPassword}"/>
+                            <p:inputText styleClass="form-control" value="#{userBean.request.userPassword}"/>
                         </div>
                         <div class="form-group">
-                            <p:commandButton styleClass="btn btn-primary" value="#{userBean.userResponse.id == null ? 'Crear' : 'Editar'}" actionListener="#{userBean.createUpdateUser()}"/>
+                            <p:commandButton styleClass="btn btn-primary" value="#{userBean.request.id == null ? 'Crear' : 'Editar'}" actionListener="#{userBean.createUpdateUser()}"/>
                         </div>
                     </h:form>
                 </div>

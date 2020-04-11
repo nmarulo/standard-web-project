@@ -16,10 +16,38 @@
         <welcome-file>/index.xhtml</welcome-file>
     </welcome-file-list>
     <session-config>
-        <session-timeout>30</session-timeout>
+        <session-timeout>3600</session-timeout>
     </session-config>
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>omega</param-value>
     </context-param>
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/500.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>javax.servlet.ServletException</exception-type>
+        <location>/500.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>javax.faces.FacesException</exception-type>
+        <location>/500.xhtml</location>
+    </error-page>
 </web-app>

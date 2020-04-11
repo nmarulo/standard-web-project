@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
+<body>
+<ui:composition>
+    <header class="main-header">
+        <a href="#" class="logo">
+            <span class="logo-mini">SWP</span>
+            <span class="logo-lg"><b>SoftN</b> Standard Web Project</span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <a id="link-navbar-sidebar-toggle" href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <i class="fa fa-bars"></i>
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown user user-menu">
+                        <a id="link-navbar-user-menu" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <p:graphicImage value="#{sessionBean.userResponse.userUrlImage}" styleClass="user-image"
+                                            alt="User Image"/>
+                            <span class="hidden-xs">
+                            #{sessionBean.userResponse.userLogin}
+                                <i class="fa fa-caret-down"/>
+                        </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <p:graphicImage value="#{sessionBean.userResponse.userUrlImage}" styleClass="img-circle"
+                                                alt="User Image"/>
+                                <p>
+                                    #{sessionBean.userResponse.userName}
+                                    <small>
+                                        <h:outputText value="#{sessionBean.userResponse.userRegistered}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT+1"/>
+                                        </h:outputText>
+                                    </small>
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a id="link-navbar-profile" href="#" class="btn btn-default btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <p:commandLink id="link-navbar-logout" styleClass="btn btn-default btn-flat"
+                                                   actionListener="#{loginBean.logout()}" value="Sign out"/>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+</ui:composition>
+</body>
+</html>

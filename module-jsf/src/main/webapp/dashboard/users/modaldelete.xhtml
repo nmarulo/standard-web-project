@@ -15,14 +15,14 @@
         Borrar usuario
     </ui:define>
     <ui:define name="body">
-        ¿Desea borrar el usuario <strong>"<h:outputText id="modal-delete-value" value="#{userBean.userResponse.userName}"/>"</strong> de forma permanente?
+        ¿Desea borrar el usuario <strong>"<h:outputText id="modal-delete-value" value="#{userBean.request.userName}"/>"</strong> de forma permanente?
     </ui:define>
     <ui:define name="footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
         <p:commandLink value="Si"
                        styleClass="btn btn-default"
                        actionListener="#{userBean.deleteSelectedUser()}"
-                       update="table-user messages">
+                       update="panel-table-users messages">
             <f:passThroughAttribute name="data-dismiss" value="modal"/>
         </p:commandLink>
     </ui:define>

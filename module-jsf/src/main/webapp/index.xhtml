@@ -8,40 +8,41 @@
 <body>
 <ui:composition template="/WEB-INF/template/login.xhtml">
     <ui:define name="content">
-        <div id="login" class="page-container center-block">
-            <div class="panel panel-default clearfix">
-                <div class="panel-body">
-                    <div id="logo">
-                        <h:graphicImage value="resources/images/softn.png" styleClass="center-block"
-                                        alt="SoftN"/>
-                        <h1 class="text-center">Standard Web Project
-                            <small>SoftN</small>
-                        </h1>
+        <div class="login-box">
+            <div class="login-logo">
+                <a href="#">Standard Web Project <b>SoftN</b></a>
+            </div>
+            <div class="login-box-body">
+                <p class="login-box-msg">Iniciar sesión</p>
+                <h:form id="form-login" method="post">
+                    <div class="form-group has-feedback">
+                        <h:outputLabel styleClass="sr-only" value="Usuario" for="input-user-login"/>
+                        <p:inputText id="input-user-login" styleClass="form-control" placeholder="Usuario"
+                                     value="#{loginBean.loginRequest.userLogin}"/>
+                        <span class="glyphicon glyphicon-user form-control-feedback"/>
                     </div>
-                    <hr/>
-                    <h:form id="form" styleClass="form-table">
-                        <div class="form-group input-group">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-user"/> Usuario
-                            </span>
-                            <p:inputText styleClass="form-control" value="#{loginBean.userResponse.userLogin}"/>
+                    <div class="form-group has-feedback">
+                        <h:outputLabel styleClass="sr-only" for="input-user-password" value="Contraseña"/>
+                        <p:password id="input-user-password" styleClass="form-control" placeholder="Contraseña"
+                                    value="#{loginBean.loginRequest.userPassword}"/>
+                        <span class="glyphicon glyphicon-lock form-control-feedback"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="checkbox icheck">
+                                <p:selectBooleanCheckbox id="input-remember-me" itemLabel="Recuérdame"
+                                                         value="#{loginBean.loginRequest.rememberMe}"/>
+                            </div>
                         </div>
-                        <span class="form-table-cell-hidden"/>
-                        <div class="form-group input-group">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-lock"/> Contraseña
-                            </span>
-                            <p:password styleClass="form-control" value="#{loginBean.userResponse.userPassword}"/>
+                        <div class="col-xs-4">
+                            <p:commandButton id="button-login" styleClass="btn btn-primary btn-block btn-flat"
+                                             value="Iniciar" actionListener="#{loginBean.login()}"/>
                         </div>
-                        <span class="form-table-cell-hidden"/>
-                        <div class="form-group input-group">
-                            <p:commandLink update="messages" styleClass="btn btn-primary btn-block"
-                                           actionListener="#{loginBean.login()}">
-                                Iniciar sesión <span class="glyphicon glyphicon-chevron-right"/>
-                            </p:commandLink>
-                        </div>
-                    </h:form>
-                </div>
+                    </div>
+                </h:form>
+                <a id="link-password-recovery" href="#">Recuperar contraseña</a>
+                <br/>
+                <a id="link-register" href="#" class="text-center">Registrarse</a>
             </div>
         </div>
     </ui:define>

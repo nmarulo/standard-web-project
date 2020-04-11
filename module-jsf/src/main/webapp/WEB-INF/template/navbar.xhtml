@@ -7,69 +7,70 @@
       xmlns:p="http://primefaces.org/ui">
 <body>
 <ui:composition>
-    <nav class="navbar navbar-custom navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#navbar-main">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"/>
-                    <span class="icon-bar"/>
-                    <span class="icon-bar"/>
-                </button>
-                <button id="btn-toggle-side-nav" class="navbar-brand btn hidden-xs" type="button">
-                    <span class="glyphicon glyphicon-menu-hamburger"/>
-                </button>
-                <p:link outcome="/index" styleClass="navbar-brand">Standard Web Project</p:link>
-            </div>
-            <h:form>
-                <div class="collapse navbar-collapse" id="navbar-main">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                <span class="glyphicon glyphicon-user"/>
-                                Hola #{sessionBean.userResponse.userName}
-                                <span class="caret"/>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <h:commandLink styleClass="btn btn-navbar"
-                                                   actionListener="#{loginBean.logout()}">
-                                        <span>Cerrar sesión</span>
-                                    </h:commandLink>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="menu-content nav navbar-nav side-nav">
-                        <li>
-                            <p:link outcome="/dashboard/index">
-                                <span class="glyphicon glyphicon-globe"/> Información
-                            </p:link>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false">
-                                <span class="glyphicon glyphicon-user"/>
-                                Usuarios <span class="caret"/>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <p:link outcome="/dashboard/user/index" value="Usuarios"/>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <p:link outcome="/dashboard/configuration/index">
-                                <span class="glyphicon glyphicon-cog"/> Configuración
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">Principal</li>
+                <li>
+                    <p:link id="link-dashboard" outcome="/dashboard/index">
+                        <i class="fa fa-tachometer-alt"/>
+                        <span>Dashboard</span>
+                    </p:link>
+                </li>
+                <li>
+                    <p:link id="link-dashboard-users" outcome="/dashboard/users/index">
+                        <i class="fa fa-users"/>
+                        <span>Usuarios</span>
+                    </p:link>
+                </li>
+                <li>
+                    <p:link id="link-dashboard-settings" outcome="/dashboard/settings/index">
+                        <i class="fa fa-cogs"/>
+                        <span>Configuración</span>
+                    </p:link>
+                </li>
+                <li class="header">Administración</li>
+                <li class="treeview">
+                    <a id="link-dashboard-settings-href" href="#">
+                        <i class="fa fa-cogs"/>
+                        <span>Configuración</span>
+                        <i class="fa fa-angle-left pull-right"/>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="active">
+                            <p:link id="link-dashboard-setting-gravatar" outcome="/dashboard/settings/gravatar">
+                                <i class="fa fa-cog"/>
+                                <span>GrAvatar</span>
                             </p:link>
                         </li>
                     </ul>
-                </div>
-            </h:form>
-        </div>
-    </nav>
+                </li>
+                <li class="treeview">
+                    <a id="link-dashboard-users-href" href="#">
+                        <i class="fa fa-users-cog"/>
+                        <span>Usuarios</span>
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"/>
+                    </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="active">
+                            <p:link id="link-dashboard-users-profiles" outcome="/dashboard/users/profiles/index">
+                                <i class="fa fa-user-circle"/>
+                                <span>Perfiles</span>
+                            </p:link>
+                        </li>
+                        <li>
+                            <p:link id="link-dashboard-users-permissions" outcome="/dashboard/users/permissions/index">
+                                <i class="fa fa-key"/>
+                                <span>Permisos</span>
+                            </p:link>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </aside>
 </ui:composition>
 </body>
 </html>

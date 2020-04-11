@@ -6,11 +6,6 @@ var sessionSetInterval = null;
 var viewExpiredSetTimeout = null;
 
 (function () {
-    //Ocultar/Mostrar menu lateral
-    $('#btn-toggle-side-nav').on('click', function () {
-        $('.side-nav').toggleClass('side-nav-hidden');
-        $('.wrapper').toggleClass('wrapper-hidden');
-    });
 })();
 
 /**
