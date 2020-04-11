@@ -94,10 +94,14 @@ public class QueryEntityBuilder<E> {
         }
         
         private Predicate mapPredicate(Map.Entry<String, Object> entry) {
-            String key   = entry.getKey();
-            Object value = entry.getValue();
+            Path<String> key   = this.root.get(entry.getKey());
+            Object       value = entry.getValue();
             
-            return this.criteriaBuilder.equal(this.root.get(key), value);
+            if (value instanceof String) {
+                return this.criteriaBuilder.like(key, "%" + value + "%");
+            }
+            
+            return this.criteriaBuilder.equal(key, value);
         }
         
     }
