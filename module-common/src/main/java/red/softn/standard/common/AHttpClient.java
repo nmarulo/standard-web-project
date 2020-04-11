@@ -1,6 +1,7 @@
 package red.softn.standard.common;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,10 +16,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class AHttpClient {
     
@@ -32,50 +36,57 @@ public abstract class AHttpClient {
     
     private HttpResponse response;
     
-    public AHttpClient(String host) {
+    private boolean returnArray;
+    
+    protected AHttpClient(String host) {
         this(host, null);
     }
     
-    public AHttpClient(String host, String path) {
+    protected AHttpClient(String host, String path) {
         this.gson = GsonUtil.gsonBuilder();
         this.host = DefaultUtils.removeSlash(removeHttp(host));
         this.https = false;
         this.path = path;
         this.response = null;
+        this.returnArray = false;
     }
     
-    public <R> R get(Class<R> rClass, String... uri) throws Exception {
+    protected <R> R get(Class<R> rClass, String... uri) throws Exception {
         return get(null, rClass, uri);
     }
     
-    public <R, P> R get(P objectParam, Class<R> rClass, String... uri) throws Exception {
+    protected <R, P> R get(P objectParam, Class<?> rClass, String... uri) throws Exception {
         return get(null, objectParam, rClass, uri);
     }
     
-    public <R, O, P> R get(O objectRequest, P objectParam, Class<R> rClass, String... uri) throws Exception {
+    protected <R, O, P> R get(O objectRequest, P objectParam, Class<?> rClass, String... uri) throws Exception {
         return call(Request::Get, objectRequest, rClass, GsonUtil.convertObjectToMap(objectParam), uri);
     }
     
-    public <R, O> R post(O objectRequest, Class<R> rClass, String... uri) throws Exception {
+    protected <R, O> R post(O objectRequest, Class<?> rClass, String... uri) throws Exception {
         return call(Request::Post, objectRequest, rClass, null, uri);
     }
     
-    public <R, O> R put(O objectRequest, Class<R> rClass, String... uri) throws Exception {
+    protected <R, O> R put(O objectRequest, Class<R> rClass, String... uri) throws Exception {
         return call(Request::Put, objectRequest, rClass, null, uri);
     }
     
-    public <O> void delete(O objectRequest, String... uri) throws Exception {
+    protected <O> void delete(O objectRequest, String... uri) throws Exception {
         call(Request::Delete, objectRequest, null, null, uri);
     }
     
-    public int getStatusCode() {
+    protected int getStatusCode() {
         return this.response.getStatusLine()
                             .getStatusCode();
     }
     
     protected abstract void actionResponseException();
     
-    private <R, O> R call(Function<URI, Request> function, O objectRequest, Class<R> rClass, Map<String, Object> parameters, String... uri) throws Exception {
+    protected void setReturnArray(boolean returnArray) {
+        this.returnArray = returnArray;
+    }
+    
+    private <R, O> R call(Function<URI, Request> function, O objectRequest, Class<?> rClass, Map<String, Object> parameters, String... uri) throws Exception {
         try {
             Request request = function.apply(uriBuilder(parameters, uri));
             setBody(objectRequest, request);
@@ -90,10 +101,11 @@ public abstract class AHttpClient {
         }
     }
     
-    private <R> R handleResponse(HttpResponse response, Class<R> rClass) throws IOException {
+    private <R> R handleResponse(HttpResponse response, Class<?> rClass) throws IOException {
         this.response = response;
-        StatusLine statusLine = response.getStatusLine();
-        HttpEntity entity     = response.getEntity();
+        StatusLine   statusLine = response.getStatusLine();
+        HttpEntity   entity     = response.getEntity();
+        TypeToken<?> typeToken;
         
         if (statusLine.getStatusCode() >= 300) {
             throw new HttpResponseException(statusLine.getStatusCode(), statusLine.getReasonPhrase());
@@ -107,15 +119,26 @@ public abstract class AHttpClient {
             return null;
         }
         
-        return GsonUtil.gsonBuilder()
-                       .fromJson(new InputStreamReader(entity.getContent()), rClass);
+        if (rClass.isArray() && !this.returnArray) {
+            typeToken = TypeToken.getParameterized(List.class, rClass.getComponentType());
+        } else {
+            typeToken = TypeToken.get(rClass);
+            this.returnArray = false;
+        }
+        
+        InputStreamReader inputStreamReader = new InputStreamReader(entity.getContent(), StandardCharsets.UTF_8);
+        
+        return this.gson.fromJson(inputStreamReader, typeToken.getType());
     }
     
     private void setDefaultHeader(Request request) {
-        request.addHeader("Accept", "application/json")
+        request.addHeader("Accept", "*/*")
                .addHeader("Content-Type", "application/json; charset=UTF-8")
                .addHeader("Users-Agent", "standard-web-project/0.1.0-ALPHA JAVA/8")
-               .addHeader("Accept-Encoding", "")
+               .addHeader("Accept-Encoding", "gzip, deflate, br")
+               .addHeader("Host", "localhost:8888")
+               .addHeader("Connection", "keep-alive")
+               .addHeader("Cache-Control", "no-cache")
                .addHeader("Expect", "");
     }
     
@@ -132,7 +155,9 @@ public abstract class AHttpClient {
                             .collect(Collectors.joining("/"));
         
         if (StringUtils.isNotBlank(this.path)) {
-            path = String.join("/", this.path, path);
+            path = Stream.of(this.path, path)
+                         .filter(StringUtils::isNotBlank)
+                         .collect(Collectors.joining("/"));
         }
         
         URIBuilder uriBuilder = new URIBuilder().setScheme(this.https ? "https" : "http")
