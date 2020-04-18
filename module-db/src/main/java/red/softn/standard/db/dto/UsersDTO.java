@@ -33,7 +33,7 @@ public class UsersDTO {
     
     @Basic
     @Column(name = "user_registered")
-    @Temporal(value = TemporalType.DATE)
+    @Temporal(value = TemporalType.TIMESTAMP)
     private Date userRegistered;
     
     @Basic
