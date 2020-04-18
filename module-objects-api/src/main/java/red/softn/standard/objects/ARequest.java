@@ -1,5 +1,10 @@
 package red.softn.standard.objects;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ARequest<R> {
     
     private R request;
@@ -14,27 +19,4 @@ public class ARequest<R> {
         this.request = request;
     }
     
-    public String getUserName() {
-        return userName;
-    }
-    
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-    
-    public String getToken() {
-        return token;
-    }
-    
-    public void setToken(String token) {
-        this.token = token;
-    }
-    
-    public R getRequest() {
-        return request;
-    }
-    
-    public void setRequest(R request) {
-        this.request = request;
-    }
 }
