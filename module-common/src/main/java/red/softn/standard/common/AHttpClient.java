@@ -71,6 +71,10 @@ public abstract class AHttpClient {
         return call(Request::Put, objectRequest, rClass, null, uri);
     }
     
+    protected void delete(String... uri) throws Exception {
+        delete(null, uri);
+    }
+    
     protected <O> void delete(O objectRequest, String... uri) throws Exception {
         call(Request::Delete, objectRequest, null, null, uri);
     }
