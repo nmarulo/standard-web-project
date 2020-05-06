@@ -17,9 +17,9 @@ public class MultiDateDeserializer extends StdDeserializer<Date> {
     private static final long serialVersionUID = 1L;
     
     private static final String[] DATE_FORMATS = new String[] {
-            "yyyy-MM-dd HH:mm:ss",
-            "yyyy-MM-dd'T'HH:mm:ssXXX",
-            "yyyy-MM-dd"
+        "yyyy-MM-dd HH:mm:ss",
+        "yyyy-MM-dd'T'HH:mm:ssXXX",
+        "yyyy-MM-dd"
     };
     
     public MultiDateDeserializer() {
@@ -34,19 +34,24 @@ public class MultiDateDeserializer extends StdDeserializer<Date> {
     public Date deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JsonNode node = jp.getCodec()
                           .readTree(jp);
-        final String date = node.textValue();
         
-        if (date.matches("[0-9]+")) {
-            return new Date(Long.parseLong(date));
-        }
-        
-        for (String dateFormat : DATE_FORMATS) {
-            try {
-                return new SimpleDateFormat(dateFormat).parse(date);
-            } catch (ParseException ignored) {
+        if (node.isLong()) {
+            return new Date(node.longValue());
+        } else if (node.isTextual()) {
+            final String date = node.textValue();
+            
+            if (date.matches("[0-9]+")) {
+                return new Date(Long.parseLong(date));
+            }
+            
+            for (String dateFormat : DATE_FORMATS) {
+                try {
+                    return new SimpleDateFormat(dateFormat).parse(date);
+                } catch (ParseException ignored) {
+                }
             }
         }
         
-        throw new JsonParseException(jp, "Unparseable date: \"" + date + "\". Supported formats: " + Arrays.toString(DATE_FORMATS));
+        throw new JsonParseException(jp, "Unparseable date: \"" + node.toString() + "\". Supported formats: " + Arrays.toString(DATE_FORMATS));
     }
 }
