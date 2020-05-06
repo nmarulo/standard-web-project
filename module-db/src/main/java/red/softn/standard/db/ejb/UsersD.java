@@ -7,6 +7,7 @@ import red.softn.standard.db.dto.UsersDTO;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -27,6 +28,10 @@ public class UsersD implements UsersDI {
     
     @Override
     public UsersDTO insert(EntityManager entityManager, UsersDTO dto) throws Exception {
+        if (dto.getUserRegistered() == null) {
+            dto.setUserRegistered(new Date());
+        }
+        
         return this.usersDAO.insert(entityManager, dto);
     }
     
