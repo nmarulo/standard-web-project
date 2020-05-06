@@ -8,37 +8,104 @@
 >
 <body>
 <ui:composition template="/WEB-INF/template/index.xhtml">
-    <ui:param name="breadcrumbUrl" value="/dashboard/users/index"/>
-    <ui:param name="breadcrumbName" value="Usuarios"/>
+    <ui:define name="header">
+        <h1>
+            Usuarios
+            <small>Gestión de usuarios</small>
+        </h1>
+    </ui:define>
+    <ui:define name="breadcrumb">
+        <li>
+            <p:link id="link-breadcrumb-users" outcome="/dashboard/users/index">
+                <i class="fa fa-users"/>
+                Usuarios
+            </p:link>
+        </li>
+        <li class="active">Gestión</li>
+    </ui:define>
     <ui:define name="content">
-        <div class="page-container">
-            <div>
-                <h1>#{userBean.request.id == null ? 'Crear' : 'Editar'} usuario</h1>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h:form>
+        <div class="box">
+            <div class="box-body">
+                <h:form styleClass="form-horizontal">
+                    <div class="col-md-4 col-md-push-8">
+                        <h:panelGroup styleClass="form-group" rendered="#{!userBean.isCreatingRecord()}">
+                            <div class="col-md-12">
+                                <p:graphicImage value="#{userBean.request.userUrlImage}"
+                                                styleClass="img-responsive center-block"
+                                                alt="User Image"/>
+                            </div>
+                        </h:panelGroup>
+                    </div>
+                    <div class="col-md-8 col-md-pull-4">
                         <div class="form-group">
-                            <p:outputLabel styleClass="control-label" value="Nombre"/>
-                            <p:inputText styleClass="form-control" value="#{userBean.request.userLogin}"/>
+                            <p:outputLabel for="input-user-name" styleClass="control-label col-md-4" value="Nombre"/>
+                            <div class="col-md-8">
+                                <p:inputText id="input-user-name" styleClass="form-control"
+                                             value="#{userBean.request.userName}"/>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <p:outputLabel styleClass="control-label" value="Nombre"/>
-                            <p:inputText styleClass="form-control" value="#{userBean.request.userName}"/>
+                            <p:outputLabel for="input-user-login" styleClass="control-label col-md-4" value="Usuario"/>
+                            <div class="col-md-8">
+                                <p:inputText id="input-user-login" styleClass="form-control"
+                                             value="#{userBean.request.userLogin}"/>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <p:outputLabel styleClass="control-label" value="Nombre"/>
-                            <p:inputText styleClass="form-control" value="#{userBean.request.userEmail}"/>
+                            <p:outputLabel for="input-user-email" styleClass="control-label col-md-4" value="Email"/>
+                            <div class="col-md-8">
+                                <p:inputText id="input-user-email" styleClass="form-control"
+                                             value="#{userBean.request.userEmail}"/>
+                            </div>
                         </div>
+                        <h:panelGroup rendered="#{userBean.isCreatingRecord()}">
+                            <div class="form-group">
+                                <p:outputLabel for="input-user-password" styleClass="control-label col-md-4"
+                                               value="Contraseña"/>
+                                <div class="col-md-8">
+                                    <p:inputText id="input-user-password" styleClass="form-control"
+                                                 value="#{userBean.request.userPassword}"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <p:outputLabel for="input-user-password-re" styleClass="control-label col-md-4"
+                                               value="Repetir contraseña"/>
+                                <div class="col-md-8">
+                                    <p:inputText id="input-user-password-re" styleClass="form-control"
+                                                 value="#{userBean.request.userPassword}"/>
+                                </div>
+                            </div>
+                        </h:panelGroup>
                         <div class="form-group">
-                            <p:outputLabel styleClass="control-label" value="Nombre"/>
-                            <p:inputText styleClass="form-control" value="#{userBean.request.userPassword}"/>
+                            <p:outputLabel for="select-user-profiles" styleClass="control-label col-md-4"
+                                           value="Perfil"/>
+                            <div class="col-md-8">
+                                <p:selectOneMenu id="select-user-profiles">
+                                    <f:selectItem itemLabel="- Seleccionar perfil -" noSelectionOption="true"/>
+                                </p:selectOneMenu>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <p:commandButton styleClass="btn btn-primary" value="#{userBean.request.id == null ? 'Crear' : 'Editar'}" actionListener="#{userBean.createUpdateUser()}"/>
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-4">
+                                <div class="row">
+                                    <h:panelGroup rendered="#{!userBean.isCreatingRecord()}">
+                                        <div class="col-lg-6">
+                                            <p:commandButton styleClass="btn btn-primary"
+                                                             value="Modificar contraseña"
+                                                             actionListener="#{userBean.updatePassword()}"/>
+                                        </div>
+                                        <br class="hidden-lg"/>
+                                    </h:panelGroup>
+                                    <div class="col-lg-6">
+                                        <p:commandButton styleClass="btn btn-primary"
+                                                         value="#{userBean.getActionForm()}"
+                                                         actionListener="#{userBean.createUpdateUser()}"/>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </h:form>
-                </div>
+                    </div>
+                </h:form>
             </div>
         </div>
     </ui:define>

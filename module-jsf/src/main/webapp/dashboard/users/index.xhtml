@@ -6,17 +6,60 @@
 >
 <body>
 <ui:composition template="/WEB-INF/template/index.xhtml">
+    <ui:define name="header">
+        <h1>
+            Usuarios
+            <small>Gestión de usuarios</small>
+        </h1>
+    </ui:define>
+    <ui:define name="breadcrumb">
+        <li class="active">Usuarios</li>
+    </ui:define>
     <ui:define name="content">
-        <h:form>
-            <h1>Usuarios
+        <div class="box">
+            <div class="box-header">
                 <p:link outcome="/dashboard/users/form" class="btn btn-success">
-                    <span class="glyphicon glyphicon-plus"/>
+                    <span class="fa fa-user-plus"/>
+                    <small>Agregar usuario</small>
                 </p:link>
-            </h1>
-        </h:form>
-        <h:panelGroup id="panel-table-users">
-            <ui:include src="datatable.xhtml"/>
-        </h:panelGroup>
+            </div>
+            <div class="box-body">
+                <h:panelGroup id="panel-form-users">
+                    <h:form styleClass="row">
+                        <div class="form-group col-sm-4">
+                            <p:outputLabel for="input-user-name" styleClass="control-label" value="Nombre"/>
+                            <p:inputText id="input-user-name" styleClass="form-control"
+                                         value="#{userBean.request.userName}"/>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <p:outputLabel for="input-user-login" styleClass="control-label" value="Login"/>
+                            <p:inputText id="input-user-login" styleClass="form-control"
+                                         value="#{userBean.request.userLogin}"/>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <p:outputLabel for="input-user-email" styleClass="control-label" value="Email"/>
+                            <p:inputText id="input-user-email" styleClass="form-control"
+                                         value="#{userBean.request.userEmail}"/>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <p:commandButton styleClass="btn btn-primary margin-top-5" actionListener="#{userBean.searchAll()}"
+                                                 icon="fas fa-search" value="Buscar"
+                                                 update="panel-table-users">
+                                </p:commandButton>
+                                <p:commandButton styleClass="btn btn-default margin-top-5" icon="fas fa-undo" value="Limpiar"
+                                                 actionListener="#{userBean.resetSearchForm()}"
+                                                 update="panel-form-users">
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </h:form>
+                </h:panelGroup>
+                <h:panelGroup id="panel-table-users">
+                    <ui:include src="datatable.xhtml"/>
+                </h:panelGroup>
+            </div>
+        </div>
         <ui:include src="modaldelete.xhtml"/>
     </ui:define>
 </ui:composition>
