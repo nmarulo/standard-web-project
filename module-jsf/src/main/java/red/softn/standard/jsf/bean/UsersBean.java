@@ -2,15 +2,16 @@ package red.softn.standard.jsf.bean;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
+import red.softn.standard.common.GsonUtil;
+import red.softn.standard.jsf.common.FacesUtils;
+import red.softn.standard.jsf.rest.UsersRC;
 import red.softn.standard.objects.request.UserRequest;
 import red.softn.standard.objects.response.UserResponse;
 
-import javax.faces.event.ActionListener;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @Named(value = "userBean")
@@ -19,49 +20,76 @@ public class UsersBean implements Serializable {
     
     @Getter
     @Setter
-    private UserResponse userResponse;
+    private UserRequest request;
     
     @Getter
-    private List<UserResponse> userResponseList;
+    private List<UserResponse> users;
+    
+    private final UsersRC usersRC;
     
     public UsersBean() {
-        this.userResponse = new UserResponse() {{
-            setId(1);
-            setUserEmail("test@softn.red");
-            setUserLogin("test");
-            setUserName("test");
-            setUserRegistered(new Date());
-            setUserPassword("123");
-        }};
-        this.userResponseList = Arrays.asList(new UserResponse() {{
-            setId(1);
-            setUserEmail("test@softn.red");
-            setUserLogin("test");
-            setUserName("test");
-            setUserRegistered(new Date());
-            setUserPassword("123");
-        }}, new UserResponse() {{
-            setId(2);
-            setUserEmail("test2@softn.red");
-            setUserLogin("test2");
-            setUserName("test2");
-            setUserRegistered(new Date());
-            setUserPassword("123");
-        }}, new UserResponse() {{
-            setId(3);
-            setUserEmail("test3@softn.red");
-            setUserLogin("test3");
-            setUserName("test3");
-            setUserRegistered(new Date());
-            setUserPassword("123");
-        }});
+        this.usersRC = new UsersRC();
+        this.request = selectById(FacesUtils.getRequestParameter("id"));
     }
     
     public void deleteSelectedUser() {
+        this.usersRC.remove(this.request);
     }
     
     public void createUpdateUser() {
-        //Si el id es nulo, se envía la petición de crear usuario
-        //y si no es nulo, se envía la petición de actualizar usuario.
+        if (isCreatingRecord()) {
+            this.request = convert(this.usersRC.insert(this.request));
+            
+            if (this.request.getId() != null) {
+                FacesUtils.redirectPram("form.xhtml", "id", this.request.getId()
+                                                                        .toString());
+            }
+        } else {
+            this.request = convert(this.usersRC.update(this.request));
+        }
+    }
+    
+    public void searchAll() {
+        this.users = this.usersRC.getAll(this.request);
+    }
+    
+    public void resetSearchForm() {
+        this.request = new UserRequest();
+    }
+    
+    public String getActionForm() {
+        if (isCreatingRecord()) {
+            return "Crear";
+        }
+        
+        return "Modificar";
+    }
+    
+    public boolean isCreatingRecord() {
+        return this.request.getId() == null;
+    }
+    
+    public void updatePassword() {
+    
+    }
+    
+    public void selectUserForUpdate(UserResponse userResponse) {
+    
+    }
+    
+    public void selectUserForDelete(UserResponse userResponse) {
+    
+    }
+    
+    private UserRequest selectById(String id) {
+        if (StringUtils.isBlank(id)) {
+            return new UserRequest();
+        }
+        
+        return convert(this.usersRC.getById(id));
+    }
+    
+    private UserRequest convert(UserResponse response) {
+        return GsonUtil.convertObjectTo(response, UserRequest.class);
     }
 }
