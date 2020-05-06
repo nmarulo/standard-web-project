@@ -1,11 +1,12 @@
 package red.softn.standard.db.api;
 
+import red.softn.standard.db.common.DefaultDI;
 import red.softn.standard.db.dto.UsersDTO;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-public interface UsersDI {
+public interface UsersDI extends DefaultDI {
     
     UsersDTO findById(EntityManager entityManager, Integer id) throws Exception;
     
