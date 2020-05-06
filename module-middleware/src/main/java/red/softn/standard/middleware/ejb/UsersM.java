@@ -24,9 +24,9 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
         try {
             UserRequest    request = aRequest.getRequest();
             List<UsersDTO> dtoList = this.usersDI.find(getConnection(), GsonUtil.convertObjectTo(request, UsersDTO.class));
-    
+            
             return GsonUtil.convertObjectListTo(dtoList, UserResponse[].class);
-        }finally {
+        } finally {
             closeConnection();
         }
     }
@@ -35,9 +35,9 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
     public UserResponse getById(ARequest<Integer> aRequest) throws Exception {
         try {
             UsersDTO dto = this.usersDI.findById(getConnection(), aRequest.getRequest());
-    
+            
             return GsonUtil.convertObjectTo(dto, UserResponse.class);
-        }finally {
+        } finally {
             closeConnection();
         }
     }
@@ -47,9 +47,13 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
         try {
             UserRequest request = aRequest.getRequest();
             UsersDTO    dto     = this.usersDI.insert(getConnection(), GsonUtil.convertObjectTo(request, UsersDTO.class));
-    
+            commit();
+            
             return GsonUtil.convertObjectTo(dto, UserResponse.class);
-        }finally {
+        } catch (Exception ex) {
+            rollback();
+            throw ex;
+        } finally {
             closeConnection();
         }
     }
@@ -59,9 +63,13 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
         try {
             UserRequest request = aRequest.getRequest();
             UsersDTO    dto     = this.usersDI.update(getConnection(), GsonUtil.convertObjectTo(request, UsersDTO.class));
-    
+            commit();
+            
             return GsonUtil.convertObjectTo(dto, UserResponse.class);
-        }finally {
+        } catch (Exception ex) {
+            rollback();
+            throw ex;
+        } finally {
             closeConnection();
         }
     }
@@ -71,7 +79,11 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
         try {
             UserRequest request = aRequest.getRequest();
             this.usersDI.delete(getConnection(), GsonUtil.convertObjectTo(request, UsersDTO.class));
-        }finally {
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            throw ex;
+        } finally {
             closeConnection();
         }
     }
@@ -80,7 +92,11 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
     public void deleteById(ARequest<Integer> aRequest) throws Exception {
         try {
             this.usersDI.deleteById(getConnection(), aRequest.getRequest());
-        }finally {
+            commit();
+        } catch (Exception ex) {
+            rollback();
+            throw ex;
+        } finally {
             closeConnection();
         }
     }
