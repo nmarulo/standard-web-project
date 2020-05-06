@@ -1,7 +1,5 @@
 package red.softn.standard.middleware;
 
-import red.softn.standard.db.common.DbEJB;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -20,6 +18,22 @@ public abstract class MiddlewareEJB {
         transaction.begin();
         
         return this.entityManager;
+    }
+    
+    protected void commit() {
+        EntityTransaction transaction = this.entityManager.getTransaction();
+        
+        if (transaction.isActive()) {
+            transaction.commit();
+        }
+    }
+    
+    protected void rollback() {
+        EntityTransaction transaction = this.entityManager.getTransaction();
+        
+        if (transaction.isActive()) {
+            transaction.rollback();
+        }
     }
     
     protected void closeConnection() {
