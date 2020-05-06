@@ -1,0 +1,70 @@
+body .ui-widget:not(.pi),
+body .ui-widget .ui-widget:not(.pi),
+body .ui-widget {
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body .ui-widget.glyphicon {
+    font-family: 'Glyphicons Halflings';
+}
+
+body .ui-icon {
+    font-size: inherit;
+}
+
+/* ==== button ===================================================================== */
+body .ui-button {
+    margin-right: 0.5em;
+}
+
+body .ui-linkbutton{
+    margin-right: 0;
+}
+
+body .ui-button.ui-button-text-icon-left .ui-button-text {
+    padding: 0.1em 0 0.1em 0.9em;
+}
+
+.ui-button.btn-default,
+button.ui-button.ui-state-default.btn-default,
+.ui-button.ui-state-default.btn-default {
+    border: 1px solid #ddd;
+    background: #f4f4f4;
+    color: #444;
+}
+
+.ui-button.btn-primary,
+button.ui-button.ui-state-default.btn-primary,
+.ui-button.ui-state-default.btn-primary {
+    border: 1px solid #367fa9;
+    color: #fff;
+    background: #3c8dbc;
+}
+
+body .ui-button.ui-button-text-only .ui-button-text {
+    padding: 0.1em 0.5em;
+}
+
+/* ==== paginator ===================================================================== */
+body .ui-paginator .ui-paginator-rpp-options {
+    height: 34px;
+    padding: 6px 12px;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    border-radius: 0;
+    box-shadow: none;
+    border-color: #d2d6de;
+}
+
+/* ==== input ===================================================================== */
+body .ui-autocomplete .ui-autocomplete-dropdown {
+    right: 0;
+    top: 0;
+    width: 50px;
+    position: absolute;
+}
+

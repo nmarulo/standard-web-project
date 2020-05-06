@@ -1,13 +1,4 @@
-/* PRIMEFACE ================================= */
-.ui-widget {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.ui-widget.glyphicon {
-    font-family: 'Glyphicons Halflings';
-}
-
-/* BOOTSTRAP ================================= */
+/* GENERAL ================================= */
 @font-face {
     font-family: 'Glyphicons Halflings';
 
@@ -58,7 +49,6 @@
     url("#{resource['webfonts/fa-solid-900.svg#fontawesome']}") format("svg")
 }
 
-/* GENERAL ================================= */
 body {
     white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
     white-space: -o-pre-wrap; /* Opera 7 */
@@ -68,6 +58,43 @@ body {
 
 .main-header .sidebar-toggle:before {
     content: "";
+}
+
+.margin-top-5 {
+    margin-top: 5px;
+}
+
+/* button */
+.btn.margin-top-5 {
+    margin-top: 0;
+}
+
+@media (max-width: 300px) {
+    .btn.margin-top-5 + .btn.margin-top-5,
+    .btn + .btn.margin-top-5 {
+        margin-top: 5px;
+    }
+}
+
+body .td-btn-actions .ui-button.ui-button-icon-only .ui-button-text {
+    padding: 0;
+}
+
+body .td-btn-actions .ui-linkbutton.ui-button a {
+    display: inline-table;
+}
+
+/* table */
+.table th.td-btn-actions {
+    width: 80px;
+}
+
+.table td.td-btn-actions > div {
+    visibility: hidden;
+}
+
+.table tr:hover > td.td-btn-actions > div {
+    visibility: visible;
 }
 
 /* - full-screen */
