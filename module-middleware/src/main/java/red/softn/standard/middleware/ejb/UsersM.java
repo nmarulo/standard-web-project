@@ -75,20 +75,6 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
     }
     
     @Override
-    public void delete(ARequest<UserRequest> aRequest) throws Exception {
-        try {
-            UserRequest request = aRequest.getRequest();
-            this.usersDI.delete(getConnection(), GsonUtil.convertObjectTo(request, UsersDTO.class));
-            commit();
-        } catch (Exception ex) {
-            rollback();
-            throw ex;
-        } finally {
-            closeConnection();
-        }
-    }
-    
-    @Override
     public void deleteById(ARequest<Integer> aRequest) throws Exception {
         try {
             this.usersDI.deleteById(getConnection(), aRequest.getRequest());

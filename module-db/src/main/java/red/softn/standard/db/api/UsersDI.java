@@ -16,7 +16,5 @@ public interface UsersDI extends DefaultDI {
     
     UsersDTO update(EntityManager entityManager, UsersDTO dto) throws Exception;
     
-    void delete(EntityManager entityManager, UsersDTO dto) throws Exception;
-    
     void deleteById(EntityManager entityManager, Integer id) throws Exception;
 }

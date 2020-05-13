@@ -16,7 +16,5 @@ public interface UsersMI {
     
     UserResponse put(ARequest<UserRequest> request) throws Exception;
     
-    void delete(ARequest<UserRequest> request) throws Exception;
-    
     void deleteById(ARequest<Integer> request) throws Exception;
 }

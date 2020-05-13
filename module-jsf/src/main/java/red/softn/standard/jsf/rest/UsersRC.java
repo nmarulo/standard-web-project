@@ -58,19 +58,7 @@ public class UsersRC extends AHttpClient {
         return new UserResponse();
     }
     
-    public boolean remove(UserRequest request) {
-        try {
-            delete(request);
-            
-            return true;
-        } catch (Exception ex) {
-            System.err.println(ex);
-        }
-        
-        return false;
-    }
-    
-    public boolean removeById(int id) {
+    public boolean deleteById(int id) {
         try {
             delete(String.valueOf(id));
             

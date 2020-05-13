@@ -41,11 +41,6 @@ public class UsersD implements UsersDI {
     }
     
     @Override
-    public void delete(EntityManager entityManager, UsersDTO dto) throws Exception {
-        this.usersDAO.delete(entityManager, dto);
-    }
-    
-    @Override
     public void deleteById(EntityManager entityManager, Integer id) throws Exception {
         this.usersDAO.deleteById(entityManager, id);
     }

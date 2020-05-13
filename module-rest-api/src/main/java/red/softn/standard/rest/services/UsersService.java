@@ -38,11 +38,6 @@ public class UsersService extends ARestService {
     }
     
     @DELETE
-    public Response delete(UserRequest request) {
-        return getResponse(request, this.usersMI::delete);
-    }
-    
-    @DELETE
     @Path("{id}")
     public Response deleteById(@PathParam("id") Integer id) {
         return getResponse(id, this.usersMI::deleteById);
