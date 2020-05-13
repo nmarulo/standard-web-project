@@ -72,11 +72,7 @@ public abstract class AHttpClient {
     }
     
     protected void delete(String... uri) throws Exception {
-        delete(null, uri);
-    }
-    
-    protected <O> void delete(O objectRequest, String... uri) throws Exception {
-        call(Request::Delete, objectRequest, null, null, uri);
+        call(Request::Delete, null, null, null, uri);
     }
     
     protected int getStatusCode() {
