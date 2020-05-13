@@ -18,6 +18,8 @@ import java.util.List;
 @ViewScoped
 public class UsersBean implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+    
     @Getter
     @Setter
     private UserRequest request;
@@ -32,8 +34,11 @@ public class UsersBean implements Serializable {
         this.request = selectById(FacesUtils.getRequestParameter("id"));
     }
     
-    public void deleteSelectedUser() {
-        this.usersRC.remove(this.request);
+    public void deleteSelectedUser(UserResponse user) {
+        if (this.usersRC.deleteById(user.getId())) {
+            System.out.println("El usuario a sido borrado correctamente.");
+            this.users.remove(user);
+        }
     }
     
     public void createUpdateUser() {
@@ -70,14 +75,6 @@ public class UsersBean implements Serializable {
     }
     
     public void updatePassword() {
-    
-    }
-    
-    public void selectUserForUpdate(UserResponse userResponse) {
-    
-    }
-    
-    public void selectUserForDelete(UserResponse userResponse) {
     
     }
     

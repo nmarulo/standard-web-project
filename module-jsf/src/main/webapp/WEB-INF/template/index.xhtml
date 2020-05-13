@@ -5,6 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xml:lang="es" lang="es">
 <h:head>
     <meta charset="utf-8"/>
@@ -60,6 +61,17 @@
     </div>
     <p:ajaxStatus onstart="screenLoading(true)" oncomplete="screenLoading()"/>
     <p:growl id="messages"/>
+    <h:form>
+        <p:confirmDialog global="true" header="Confirmación" closable="false">
+            <f:facet name="message">
+                <p>¿Está seguro que desea realizar esta acción?</p>
+            </f:facet>
+            <p:commandButton value="No" type="button" styleClass="btn btn-primary ui-confirmdialog-no"
+                             icon="fa fa-times"/>
+            <p:commandButton value="Si" type="button" styleClass="btn btn-default ui-confirmdialog-yes"
+                             icon="fa fa-check"/>
+        </p:confirmDialog>
+    </h:form>
     <ui:include src="loading.xhtml"/>
     <ui:include src="sessiontimeout.xhtml"/>
     <!--<ui:include src="viewexpired.xhtml"/>-->

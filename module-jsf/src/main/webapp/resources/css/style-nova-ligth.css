@@ -17,7 +17,7 @@ body .ui-button {
     margin-right: 0.5em;
 }
 
-body .ui-linkbutton{
+body .ui-linkbutton {
     margin-right: 0;
 }
 
@@ -68,3 +68,11 @@ body .ui-autocomplete .ui-autocomplete-dropdown {
     position: absolute;
 }
 
+/* ==== Dialog ===================================================================== */
+.ui-widget-overlay.ui-dialog-mask {
+    z-index: 1999 !important;
+}
+
+.ui-confirm-dialog.ui-dialog.ui-widget {
+    z-index: 2000 !important;
+}

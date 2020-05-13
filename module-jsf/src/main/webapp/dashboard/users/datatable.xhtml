@@ -21,8 +21,10 @@
                         <f:param name="id" value="#{user.id}"/>
                     </p:linkButton>
                     <p:commandLink styleClass="btn btn-danger btn-xs"
-                                   actionListener="#{userBean.selectUserForDelete(user)}">
+                                   action="#{userBean.deleteSelectedUser(user)}"
+                                   update="messages @form:@parent:panel-table-users">
                         <span class="fa fa-user-minus"/>
+                        <p:confirm icon="fa fa-exclamation-triangle text-yellow"/>
                     </p:commandLink>
                 </div>
             </p:column>
