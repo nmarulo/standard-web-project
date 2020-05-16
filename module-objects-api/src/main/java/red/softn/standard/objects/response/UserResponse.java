@@ -1,7 +1,7 @@
 package red.softn.standard.objects.response;
 
-import red.softn.standard.objects.pojo.Users;
+import red.softn.standard.objects.pojo.User;
 
-public class UserResponse extends Users {
+public class UserResponse extends User {
     
 }

@@ -2,6 +2,7 @@ package red.softn.standard.middleware.api;
 
 import red.softn.standard.objects.ARequest;
 import red.softn.standard.objects.request.UserRequest;
+import red.softn.standard.objects.response.UserFormCreateUpdateResponse;
 import red.softn.standard.objects.response.UserResponse;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface UsersMI {
     UserResponse put(ARequest<UserRequest> request) throws Exception;
     
     void deleteById(ARequest<Integer> request) throws Exception;
+    
+    UserFormCreateUpdateResponse formCreateUpdate(ARequest<Integer> request) throws Exception;
 }

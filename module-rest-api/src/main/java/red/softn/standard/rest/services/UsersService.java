@@ -42,4 +42,16 @@ public class UsersService extends ARestService {
     public Response deleteById(@PathParam("id") Integer id) {
         return getResponse(id, this.usersMI::deleteById);
     }
+    
+    @GET
+    @Path("form-create-update")
+    public Response formCreateUpdate() {
+        return formCreateUpdate(null);
+    }
+    
+    @GET
+    @Path("form-create-update/{id}")
+    public Response formCreateUpdate(@PathParam("id") Integer id) {
+        return getResponse(id, this.usersMI::formCreateUpdate, true);
+    }
 }

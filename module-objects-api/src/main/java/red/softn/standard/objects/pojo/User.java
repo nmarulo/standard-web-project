@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Setter
 @Getter
-public class Users {
+public class User {
     
     @QueryParam("id")
     private Integer id;
@@ -38,4 +38,6 @@ public class Users {
     
     @QueryParam("userUrlImage")
     private String userUrlImage;
+    
+    private Profile profile;
 }

@@ -1,12 +1,17 @@
 package red.softn.standard.middleware.ejb;
 
 import red.softn.standard.common.GsonUtil;
+import red.softn.standard.db.api.ProfilesDI;
 import red.softn.standard.db.api.UsersDI;
+import red.softn.standard.db.dto.ProfilesDTO;
 import red.softn.standard.db.dto.UsersDTO;
 import red.softn.standard.middleware.MiddlewareEJB;
 import red.softn.standard.middleware.api.UsersMI;
 import red.softn.standard.objects.ARequest;
+import red.softn.standard.objects.pojo.Profile;
 import red.softn.standard.objects.request.UserRequest;
+import red.softn.standard.objects.response.ProfileResponse;
+import red.softn.standard.objects.response.UserFormCreateUpdateResponse;
 import red.softn.standard.objects.response.UserResponse;
 
 import javax.ejb.Stateless;
@@ -18,6 +23,9 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
     
     @Inject
     private UsersDI usersDI;
+    
+    @Inject
+    private ProfilesDI profilesDI;
     
     @Override
     public List<UserResponse> get(ARequest<UserRequest> aRequest) throws Exception {
@@ -34,9 +42,9 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
     @Override
     public UserResponse getById(ARequest<Integer> aRequest) throws Exception {
         try {
-            UsersDTO dto = this.usersDI.findById(getConnection(), aRequest.getRequest());
+            UsersDTO dto = getUser(aRequest.getRequest());
             
-            return GsonUtil.convertObjectTo(dto, UserResponse.class);
+            return convert(dto);
         } finally {
             closeConnection();
         }
@@ -49,7 +57,7 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
             UsersDTO    dto     = this.usersDI.insert(getConnection(), GsonUtil.convertObjectTo(request, UsersDTO.class));
             commit();
             
-            return GsonUtil.convertObjectTo(dto, UserResponse.class);
+            return convert(dto);
         } catch (Exception ex) {
             rollback();
             throw ex;
@@ -65,7 +73,7 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
             UsersDTO    dto     = this.usersDI.update(getConnection(), GsonUtil.convertObjectTo(request, UsersDTO.class));
             commit();
             
-            return GsonUtil.convertObjectTo(dto, UserResponse.class);
+            return convert(dto);
         } catch (Exception ex) {
             rollback();
             throw ex;
@@ -85,5 +93,35 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
         } finally {
             closeConnection();
         }
+    }
+    
+    @Override
+    public UserFormCreateUpdateResponse formCreateUpdate(ARequest<Integer> request) throws Exception {
+        try {
+            Integer                      id           = request.getRequest();
+            UserFormCreateUpdateResponse response     = new UserFormCreateUpdateResponse();
+            List<ProfilesDTO>            profilesDTOS = this.profilesDI.find(getConnection(), null);
+            
+            response.setProfiles(GsonUtil.convertObjectListTo(profilesDTOS, ProfileResponse[].class));
+            
+            if (id != null) {
+                UsersDTO userDTO = getUser(request.getRequest());
+                response.setUser(convert(userDTO));
+                response.getUser()
+                        .setProfile(GsonUtil.convertObjectTo(userDTO.getProfilesDTO(), Profile.class));
+            }
+            
+            return response;
+        } finally {
+            closeConnection();
+        }
+    }
+    
+    private UsersDTO getUser(Integer id) throws Exception {
+        return this.usersDI.findById(getConnection(), id);
+    }
+    
+    private UserResponse convert(UsersDTO dto) {
+        return GsonUtil.convertObjectTo(dto, UserResponse.class);
     }
 }
