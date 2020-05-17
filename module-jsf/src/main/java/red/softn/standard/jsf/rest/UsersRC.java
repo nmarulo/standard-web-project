@@ -2,6 +2,7 @@ package red.softn.standard.jsf.rest;
 
 import red.softn.standard.common.AHttpClient;
 import red.softn.standard.objects.request.UserRequest;
+import red.softn.standard.objects.response.UserFormCreateUpdateResponse;
 import red.softn.standard.objects.response.UserResponse;
 
 import java.util.LinkedList;
@@ -34,7 +35,7 @@ public class UsersRC extends AHttpClient {
         } catch (Exception ex) {
             System.err.println(ex);
         }
-    
+        
         return new UserResponse();
     }
     
@@ -44,7 +45,7 @@ public class UsersRC extends AHttpClient {
         } catch (Exception ex) {
             System.err.println(ex);
         }
-    
+        
         return new UserResponse();
     }
     
@@ -68,5 +69,15 @@ public class UsersRC extends AHttpClient {
         }
         
         return false;
+    }
+    
+    public UserFormCreateUpdateResponse formCreateUpdate(String id) {
+        try {
+            return get(UserFormCreateUpdateResponse.class, "form-create-update", id);
+        } catch (Exception ex) {
+            System.err.println(ex);
+        }
+        
+        return new UserFormCreateUpdateResponse();
     }
 }

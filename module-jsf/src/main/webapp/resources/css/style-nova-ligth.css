@@ -76,3 +76,8 @@ body .ui-autocomplete .ui-autocomplete-dropdown {
 .ui-confirm-dialog.ui-dialog.ui-widget {
     z-index: 2000 !important;
 }
+
+/* ==== Select one menu ===================================================================== */
+.ui-selectonemenu-label.ui-inputfield {
+    padding: 0;
+}

@@ -80,8 +80,11 @@
                             <p:outputLabel for="select-user-profiles" styleClass="control-label col-md-4"
                                            value="Perfil"/>
                             <div class="col-md-8">
-                                <p:selectOneMenu id="select-user-profiles">
+                                <p:selectOneMenu id="select-user-profiles" value="#{userBean.request.profile}"
+                                                 styleClass="form-control">
                                     <f:selectItem itemLabel="- Seleccionar perfil -" noSelectionOption="true"/>
+                                    <f:selectItems value="#{userBean.profiles}" var="profile"
+                                                   itemLabel="#{profile.profileName}" itemValue="#{profile}"/>
                                 </p:selectOneMenu>
                             </div>
                         </div>

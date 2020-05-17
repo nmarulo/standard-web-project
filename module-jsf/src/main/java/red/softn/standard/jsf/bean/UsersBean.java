@@ -7,6 +7,8 @@ import red.softn.standard.common.GsonUtil;
 import red.softn.standard.jsf.common.FacesUtils;
 import red.softn.standard.jsf.rest.UsersRC;
 import red.softn.standard.objects.request.UserRequest;
+import red.softn.standard.objects.response.ProfileResponse;
+import red.softn.standard.objects.response.UserFormCreateUpdateResponse;
 import red.softn.standard.objects.response.UserResponse;
 
 import javax.faces.view.ViewScoped;
@@ -29,9 +31,12 @@ public class UsersBean implements Serializable {
     
     private final UsersRC usersRC;
     
+    @Getter
+    private List<ProfileResponse> profiles;
+    
     public UsersBean() {
         this.usersRC = new UsersRC();
-        this.request = selectById(FacesUtils.getRequestParameter("id"));
+        formCreateUpdate(FacesUtils.getRequestParameter("id"));
     }
     
     public void deleteSelectedUser(UserResponse user) {
@@ -78,12 +83,15 @@ public class UsersBean implements Serializable {
     
     }
     
-    private UserRequest selectById(String id) {
-        if (StringUtils.isBlank(id)) {
-            return new UserRequest();
-        }
+    private void formCreateUpdate(String id) {
+        UserFormCreateUpdateResponse form = this.usersRC.formCreateUpdate(id);
         
-        return convert(this.usersRC.getById(id));
+        this.profiles = form.getProfiles();
+        this.request = convert(form.getUser());
+        
+        if (this.request == null) {
+            this.request = new UserRequest();
+        }
     }
     
     private UserRequest convert(UserResponse response) {
