@@ -1,4 +1,4 @@
-//Usado en caso donde se usa el componente "p:ajax" con su atributo "delay".
+//Usado en caso donde se usa el componente "p:ajax" con su atributo "delay". EJ: /atm/modaldataconfirm.xhtml
 var canHideScreenLoading = true;
 var loadingSetTimeout = null;
 var sessionSetTimeout = null;
@@ -6,6 +6,8 @@ var sessionSetInterval = null;
 var viewExpiredSetTimeout = null;
 
 (function () {
+    extracted();
+    setCurrentPageSidebarMenu();
 })();
 
 /**
@@ -64,9 +66,8 @@ function sessionScreenTimeOut(maxInactiveInterval, sessionTimeoutCount) {
         sessionSetInterval = setInterval(function () {
             if (sessionTimeoutCount === 0) {
                 clearInterval(sessionSetInterval);
-                //remoteCommandLogout();
-                divSession.style.display = 'none';
-                viewExpiredScreen(0);
+                //Esta función se encuentra en la vista "/template/sessiontimeout.xhtml"
+                remoteCommandLogout();
             }
 
             spanCount.innerHTML = sessionTimeoutCount--;
@@ -95,16 +96,51 @@ function locationReplace(replace) {
     location.replace(replace);
 }
 
-/*
- * Usado con el componente "p:fileupload".
+/**
+ * Por ejemplo, Usado en la vista "taxpayerdeceased", en el componente "p:fileupload".
  * Mediante el componente "http://xmlns.jcp.org/jsf/passthrough"
  * se le agrega el atributo "onchange" al componente "p:fileupload".
  */
-function valueChangeListenerFileUpload(tagName) {
+function valueChangeListenerFileUpload(tagName, elementId) {
     if (tagName == 'INPUT') {
-        var button = $('#taxpayerdeceased-form-fileupload').find('button');
+        var button = $('#' + elementId).find('.btn-upload-file');
         if (button.hasClass('hidden')) {
             button.removeClass('hidden');
         }
     }
+}
+
+/**
+ * @deprecated
+ */
+function extracted() {
+    $(document).on('click', '.modal .ui-selectonemenu', function () {
+        var zIndex = $(this).closest('.modal').css('z-index');
+        var panel = $(this).closest('.ui-selectonemenu').attr('id') + '_panel';
+        $('[id*="' + panel + '"]').css('z-index', zIndex);
+    });
+
+    //Ocultar/Mostrar menu lateral
+    $('#btn-toggle-side-nav').on('click', function () {
+        $('.side-nav').toggleClass('side-nav-hidden');
+        $('.wrapper').toggleClass('wrapper-hidden');
+    });
+}
+
+function setCurrentPageSidebarMenu() {
+    let currentElement = $('ul[data-widget=tree]').find('li.treeview ul.treeview-menu li a')
+        .toArray()
+        .map(value => $(value))
+        .filter(value => value.attr('href') === window.location.pathname)
+        .shift();
+
+    if (currentElement === undefined) {
+        return;
+    }
+
+    let treeviewElement = currentElement.closest('li.treeview');
+    let parentElement = currentElement.parent('li');
+
+    treeviewElement.addClass('active');
+    parentElement.addClass('active');
 }
