@@ -56,6 +56,14 @@ body {
     -ms-word-wrap: break-word;
 }
 
+br {
+    clear: both;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
 .main-header .sidebar-toggle:before {
     content: "";
 }
@@ -85,6 +93,10 @@ body .td-btn-actions .ui-linkbutton.ui-button a {
 }
 
 /* table */
+.table .td-btn-actions {
+    text-align: center;
+}
+
 .table th.td-btn-actions {
     width: 80px;
 }
@@ -93,6 +105,7 @@ body .td-btn-actions .ui-linkbutton.ui-button a {
     visibility: hidden;
 }
 
+.table td.td-btn-actions.visible-all > div,
 .table tr:hover > td.td-btn-actions > div {
     visibility: visible;
 }

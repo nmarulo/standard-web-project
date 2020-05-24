@@ -33,3 +33,17 @@ body .form-control {
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
+
+body textarea.form-control {
+    height: auto;
+}
+
+@media (max-width: 767px) {
+    .navbar-custom-menu .dropdown.link-menu .dropdown-menu li a {
+        color: inherit;
+    }
+
+    .navbar-custom-menu .dropdown.link-menu .dropdown-menu li a:hover {
+        background: #e1e3e9;
+    }
+}
