@@ -11,6 +11,8 @@ import java.io.Serializable;
 @Named(value = "sessionBean")
 public class SessionBean implements Serializable {
     
+    public static final String USER_NAME = "username";
+    
     @Getter
     private UserResponse userResponse;
     
