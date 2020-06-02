@@ -313,3 +313,27 @@ body .ui-selectonemenu-filter-container {
 body .ui-growl {
     z-index: 2000 !important;
 }
+
+/* ==== selectonebutton ================================================================ */
+body .ui-selectonebutton.form-control {
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    height: 100%;
+}
+
+body .ui-selectonebutton.form-control .ui-button.ui-widget.ui-button-text-only {
+    padding: 6px 12px;
+    margin-bottom: 0;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
