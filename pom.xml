@@ -23,8 +23,6 @@
         <commons-io.version>2.6</commons-io.version>
         <jsf-api.version>2.2.20</jsf-api.version>
         <primefaces.version>7.0</primefaces.version>
-        <junit-jupiter.version>5.5.2</junit-jupiter.version>
-        <mockito-core.version>3.1.0</mockito-core.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,6 +30,12 @@
         <lombok.version>1.18.12</lombok.version>
         <fluent-hc.version>4.5.11</fluent-hc.version>
         <javax.ws.rs-api.version>2.1.1</javax.ws.rs-api.version>
+        <junit-jupiter.version>5.6.2</junit-jupiter.version>
+        <mockito-core.version>3.3.3</mockito-core.version>
+        <mockito-junit-jupiter.version>3.3.3</mockito-junit-jupiter.version>
+        <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
+        <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
     </properties>
 
     <modules>
@@ -105,6 +109,12 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>${mockito-core.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>${mockito-junit-jupiter.version}</version>
                 <scope>test</scope>
             </dependency>
             <!-- https://projectlombok.org/setup/maven -->
