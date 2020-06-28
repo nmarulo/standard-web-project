@@ -1,16 +1,19 @@
 Standard Web Project
 ===
+
 El propósito de Standard Web Project es tener un proyecto que sirva como base para iniciar nuevos proyectos, además, lo usare para probar y seguir aprendiendo sobre nuevos conceptos, librerías, etc... de Java.
 
 > **Versión 0.1.0 Alfa**
 
 ### Funcionalidades
+
 - Gestión de usuarios
 - Gestión de perfiles (En curso)
 - Gestión de permisos (En curso)
 - Gestión de configuración (En curso)
 
 ### Requisitos
+
 - Java JDK 8
 - Maven >= v3.6.3
 - WildFly >= v15
@@ -18,10 +21,13 @@ El propósito de Standard Web Project es tener un proyecto que sirva como base p
 - Mysql Connector java (Connector/J) >= v5.1.47
 
 ### Imágenes
+
 #### Login
+
 ![login](resources/images/login.jpg "login")
 
 #### Gestión de usuarios
+
 ![users](resources/images/users.jpg "users")
 
 Thanks
