@@ -1,6 +1,7 @@
 package red.softn.standard.db.ejb;
 
 import red.softn.standard.db.api.UsersDI;
+import red.softn.standard.db.common.DefaultD;
 import red.softn.standard.db.dao.UsersDAO;
 import red.softn.standard.db.dto.UsersDTO;
 
@@ -11,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Stateless
-public class UsersD implements UsersDI {
+public class UsersD extends DefaultD implements UsersDI {
     
     @Inject
     private UsersDAO usersDAO;

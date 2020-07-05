@@ -6,6 +6,7 @@ import red.softn.standard.db.api.UsersDI;
 import red.softn.standard.db.dto.ProfilesDTO;
 import red.softn.standard.db.dto.UsersDTO;
 import red.softn.standard.middleware.MiddlewareEJB;
+import red.softn.standard.middleware.MiddlewareManager;
 import red.softn.standard.middleware.api.UsersMI;
 import red.softn.standard.objects.ARequest;
 import red.softn.standard.objects.pojo.Profile;
@@ -37,6 +38,13 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
         } finally {
             closeConnection();
         }
+    }
+    
+    public List<UserResponse> getExample(ARequest<UserRequest> aRequest) throws Exception {
+        MiddlewareManager.ThrowingSupplier<List<UsersDTO>> supplier = () -> this.usersDI.find(GsonUtil.convertObjectTo(aRequest.getRequest(), UsersDTO.class));
+        
+        return MiddlewareManager.<UsersDTO>init("SoftnPU", this.usersDI).handle(supplier)
+                                                                        .list(UserResponse[].class);
     }
     
     @Override
