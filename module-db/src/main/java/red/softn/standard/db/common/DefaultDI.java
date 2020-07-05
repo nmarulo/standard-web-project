@@ -1,3 +1,8 @@
 package red.softn.standard.db.common;
 
-public interface DefaultDI {}
+import javax.persistence.EntityManager;
+
+public interface DefaultDI {
+    
+    void setEntityManager(EntityManager entityManager);
+}
