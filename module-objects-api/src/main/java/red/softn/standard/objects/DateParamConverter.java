@@ -19,7 +19,7 @@ public class DateParamConverter implements ParamConverter<Date> {
         "yyyy-MM-dd"
     };
     
-    private List<String> dateFormats;
+    private final List<String> dateFormats;
     
     public DateParamConverter() {
         this.dateFormats = new LinkedList<>();
