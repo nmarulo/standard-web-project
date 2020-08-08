@@ -10,12 +10,14 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class ExceptionMapperProvider implements ExceptionMapper<Exception> {
     
+    public static final String EXCEPTION_HEADER_NAME = "exception";
+    
     @Override
     public Response toResponse(Exception ex) {
         CustomHttpException customHttpException = getCustomHttpException(ex);
         
         return Response.status(customHttpException.getStatus())
-                       .header("exception", customHttpException.getMessage())
+                       .header(EXCEPTION_HEADER_NAME, customHttpException.getMessage())
                        .build();
     }
     
