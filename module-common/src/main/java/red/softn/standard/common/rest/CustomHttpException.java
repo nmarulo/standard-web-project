@@ -16,7 +16,12 @@ public class CustomHttpException extends RuntimeException {
     }
     
     public CustomHttpException(String message) {
+        this(message, Response.Status.INTERNAL_SERVER_ERROR);
+    }
+    
+    public CustomHttpException(String message, Response.Status status) {
         super(message);
+        this.status = status;
     }
     
     public CustomHttpException(String message, Throwable cause) {
