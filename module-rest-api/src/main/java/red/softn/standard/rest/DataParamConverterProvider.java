@@ -10,6 +10,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.function.Predicate;
 
 @Provider
 public class DataParamConverterProvider implements ParamConverterProvider {
@@ -18,9 +19,10 @@ public class DataParamConverterProvider implements ParamConverterProvider {
     public <T> ParamConverter<T> getConverter(Class<T> aClass, Type type, Annotation[] annotations) {
         if (aClass.isAssignableFrom(Date.class)) {
             DateParamConverter dateParamConverter = new DateParamConverter();
+            Predicate<Annotation> predicate = value -> value.annotationType()
+                                                         .isAssignableFrom(DateFormatterParamConverter.class);
             DateFormatterParamConverter annotation = Arrays.stream(annotations)
-                                                           .filter(value -> value.annotationType()
-                                                                                 .isAssignableFrom(DateFormatterParamConverter.class))
+                                                           .filter(predicate)
                                                            .map(value -> (DateFormatterParamConverter) value)
                                                            .findFirst()
                                                            .orElse(null);
