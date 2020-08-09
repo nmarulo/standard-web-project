@@ -1,8 +1,7 @@
 package red.softn.standard.rest;
 
-import red.softn.standard.common.rest.CustomHttpException;
-
 import javax.ejb.EJBException;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -10,30 +9,32 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class ExceptionMapperProvider implements ExceptionMapper<Exception> {
     
-    public static final String EXCEPTION_HEADER_NAME = "exception";
-    
     @Override
     public Response toResponse(Exception ex) {
-        CustomHttpException customHttpException = getCustomHttpException(ex);
+        WebApplicationException customHttpException = getCustomHttpException(ex);
+        Response                response            = customHttpException.getResponse();
         
-        return Response.status(customHttpException.getStatus())
-                       .header(EXCEPTION_HEADER_NAME, customHttpException.getMessage())
+        return Response.status(response.getStatusInfo())
+                       .entity(customHttpException.getMessage())
+                       .type(response.getMediaType())
                        .build();
     }
     
-    private boolean isEjbCustomHttpException(Exception ex) {
-        return ex instanceof EJBException && ((EJBException) ex).getCausedByException() instanceof CustomHttpException;
+    private boolean isEJBException(Exception ex) {
+        return ex instanceof EJBException && ((EJBException) ex).getCausedByException() instanceof WebApplicationException;
     }
     
-    private CustomHttpException getCustomHttpException(Exception ex) {
-        CustomHttpException customHttpException;
+    private WebApplicationException getCustomHttpException(Exception ex) {
+        WebApplicationException customHttpException;
         
-        if (isEjbCustomHttpException(ex)) {
-            customHttpException = (CustomHttpException) ((EJBException) ex).getCausedByException();
-        } else if (ex instanceof CustomHttpException) {
-            customHttpException = (CustomHttpException) ex;
+        if (isEJBException(ex)) {
+            customHttpException = (WebApplicationException) ((EJBException) ex).getCausedByException();
+        } else if (ex instanceof WebApplicationException) {
+            customHttpException = (WebApplicationException) ex;
         } else {
-            customHttpException = new CustomHttpException();
+            System.err.println("Error no controlado.");
+            ex.printStackTrace();
+            customHttpException = new WebApplicationException("Algo salió mal. Inténtalo mas tarde.");
         }
         
         return customHttpException;
