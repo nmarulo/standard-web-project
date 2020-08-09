@@ -1,4 +1,4 @@
-package red.softn.standard.rest;
+package red.softn.standard.rest.provider;
 
 import javax.ejb.EJBException;
 import javax.ws.rs.WebApplicationException;

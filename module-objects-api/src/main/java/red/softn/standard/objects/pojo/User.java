@@ -3,7 +3,7 @@ package red.softn.standard.objects.pojo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
-import red.softn.standard.objects.DateFormatterParamConverter;
+import red.softn.standard.objects.annotation.DateFormatterParamConverter;
 import red.softn.standard.objects.MultiDateDeserializer;
 
 import javax.ws.rs.QueryParam;

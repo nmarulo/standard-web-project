@@ -1,6 +1,6 @@
-package red.softn.standard.rest;
+package red.softn.standard.rest.provider;
 
-import red.softn.standard.objects.DateFormatterParamConverter;
+import red.softn.standard.objects.annotation.DateFormatterParamConverter;
 import red.softn.standard.objects.DateParamConverter;
 
 import javax.ws.rs.ext.ParamConverter;
