@@ -7,7 +7,6 @@ import red.softn.standard.db.dto.ProfilesDTO;
 import red.softn.standard.db.dto.UsersDTO;
 import red.softn.standard.middleware.MiddlewareEJB;
 import red.softn.standard.middleware.api.UsersMI;
-import red.softn.standard.objects.ARequest;
 import red.softn.standard.objects.pojo.Profile;
 import red.softn.standard.objects.request.UserRequest;
 import red.softn.standard.objects.response.ProfileResponse;
@@ -28,9 +27,8 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
     private ProfilesDI profilesDI;
     
     @Override
-    public List<UserResponse> get(ARequest<UserRequest> aRequest) throws Exception {
+    public List<UserResponse> search(UserRequest request) throws Exception {
         try {
-            UserRequest    request = aRequest.getRequest();
             List<UsersDTO> dtoList = this.usersDI.find(getConnection(), GsonUtil.convertObjectTo(request, UsersDTO.class));
             
             return GsonUtil.convertObjectListTo(dtoList, UserResponse[].class);
@@ -40,9 +38,9 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
     }
     
     @Override
-    public UserResponse getById(ARequest<Integer> aRequest) throws Exception {
+    public UserResponse getById(Integer request) throws Exception {
         try {
-            UsersDTO dto = getUser(aRequest.getRequest());
+            UsersDTO dto = getUser(request);
             
             return convert(dto);
         } finally {
@@ -51,10 +49,9 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
     }
     
     @Override
-    public UserResponse post(ARequest<UserRequest> aRequest) throws Exception {
+    public UserResponse post(UserRequest request) throws Exception {
         try {
-            UserRequest request = aRequest.getRequest();
-            UsersDTO    dto     = this.usersDI.insert(getConnection(), GsonUtil.convertObjectTo(request, UsersDTO.class));
+            UsersDTO dto = this.usersDI.insert(getConnection(), GsonUtil.convertObjectTo(request, UsersDTO.class));
             commit();
             
             return convert(dto);
@@ -67,10 +64,9 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
     }
     
     @Override
-    public UserResponse put(ARequest<UserRequest> aRequest) throws Exception {
+    public UserResponse put(UserRequest request) throws Exception {
         try {
-            UserRequest request = aRequest.getRequest();
-            UsersDTO    dto     = this.usersDI.update(getConnection(), GsonUtil.convertObjectTo(request, UsersDTO.class));
+            UsersDTO dto = this.usersDI.update(getConnection(), GsonUtil.convertObjectTo(request, UsersDTO.class));
             commit();
             
             return convert(dto);
@@ -83,9 +79,9 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
     }
     
     @Override
-    public void deleteById(ARequest<Integer> aRequest) throws Exception {
+    public void deleteById(Integer request) throws Exception {
         try {
-            this.usersDI.deleteById(getConnection(), aRequest.getRequest());
+            this.usersDI.deleteById(getConnection(), request);
             commit();
         } catch (Exception ex) {
             rollback();
@@ -96,16 +92,15 @@ public class UsersM extends MiddlewareEJB implements UsersMI {
     }
     
     @Override
-    public UserFormCreateUpdateResponse formCreateUpdate(ARequest<Integer> request) throws Exception {
+    public UserFormCreateUpdateResponse formCreateUpdate(Integer request) throws Exception {
         try {
-            Integer                      id           = request.getRequest();
             UserFormCreateUpdateResponse response     = new UserFormCreateUpdateResponse();
             List<ProfilesDTO>            profilesDTOS = this.profilesDI.find(getConnection(), null);
             
             response.setProfiles(GsonUtil.convertObjectListTo(profilesDTOS, ProfileResponse[].class));
             
-            if (id != null) {
-                UsersDTO userDTO = getUser(request.getRequest());
+            if (request != null) {
+                UsersDTO userDTO = getUser(request);
                 response.setUser(convert(userDTO));
                 response.getUser()
                         .setProfile(GsonUtil.convertObjectTo(userDTO.getProfilesDTO(), Profile.class));
