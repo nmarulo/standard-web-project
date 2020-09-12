@@ -81,7 +81,7 @@
                                            value="Perfil"/>
                             <div class="col-md-8">
                                 <p:selectOneMenu id="select-user-profiles" value="#{userBean.request.profile}"
-                                                 styleClass="form-control">
+                                                 styleClass="form-control" converter="entityConverter">
                                     <f:selectItem itemLabel="- Seleccionar perfil -" noSelectionOption="true"/>
                                     <f:selectItems value="#{userBean.profiles}" var="profile"
                                                    itemLabel="#{profile.profileName}" itemValue="#{profile}"/>
