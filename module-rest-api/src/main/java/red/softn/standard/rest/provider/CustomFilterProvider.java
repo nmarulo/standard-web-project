@@ -3,10 +3,12 @@ package red.softn.standard.rest.provider;
 import red.softn.standard.rest.annotation.CustomRestApi;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.container.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.ext.Provider;
-import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -17,12 +19,12 @@ public class CustomFilterProvider implements ContainerRequestFilter, ContainerRe
     private ResourceInfo resourceInfo;
     
     @Override
-    public void filter(ContainerRequestContext containerRequestContext) throws IOException {
+    public void filter(ContainerRequestContext containerRequestContext) {
         checkAnnotations(CustomRestApi::canNullRequest, value -> this.checkBody(value, containerRequestContext));
     }
     
     @Override
-    public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext containerResponseContext) throws IOException {
+    public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext containerResponseContext) {
         int status = containerResponseContext.getStatus();
         
         if (status >= 200 && status < 300) {
@@ -35,7 +37,11 @@ public class CustomFilterProvider implements ContainerRequestFilter, ContainerRe
     }
     
     private void checkBody(boolean canNullRequest, ContainerRequestContext containerRequestContext) {
-        if (containerRequestContext.getLength() <= 0 && !canNullRequest) {
+        Method resourceMethod = resourceInfo.getResourceMethod();
+        boolean isMethodGet = resourceMethod.isAnnotationPresent(GET.class);
+        boolean isMethodDelete = resourceMethod.isAnnotationPresent(DELETE.class);
+        
+        if (containerRequestContext.getLength() <= 0 && !canNullRequest && !(isMethodGet || isMethodDelete)) {
             throw new BadRequestException("El cuerpo de la petición no puede estar vació.");
         }
     }
