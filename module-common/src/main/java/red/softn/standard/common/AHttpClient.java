@@ -111,11 +111,11 @@ public abstract class AHttpClient {
             throw new HttpResponseException(statusLine.getStatusCode(), statusLine.getReasonPhrase());
         }
         
-        if (entity == null) {
+        if (entity == null && statusLine.getStatusCode() != 204) {
             throw new ClientProtocolException("Response contains no content");
         }
         
-        if (rClass == null) {
+        if (rClass == null || entity == null) {
             return null;
         }
         
