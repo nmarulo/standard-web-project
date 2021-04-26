@@ -20,7 +20,7 @@
         <org.eclipse.persistence.jpa.version>2.7.6</org.eclipse.persistence.jpa.version>
         <javaee-web-api.version>7.0</javaee-web-api.version>
         <javaee-api.version>7.0</javaee-api.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <jsf-api.version>2.2.20</jsf-api.version>
         <primefaces.version>7.0</primefaces.version>
         <maven.compiler.source>1.8</maven.compiler.source>
